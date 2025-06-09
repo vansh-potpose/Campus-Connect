@@ -16,7 +16,7 @@ export default function Home() {
         />
 
           <div className="bg-amber-300 h-screen w-full flex items-center justify-center ">
-        
+            {currentPage === "Home" && <HomePage />}
           </div>
      
     </div>
