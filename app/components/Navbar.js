@@ -29,7 +29,7 @@ const Navbar = ({ currentPage, setCurrentPage, user }) => {
                         className={`px-3 py-1 border-2 rounded-md text-sm font-medium cursor-pointer transition-colors duration-300
                             ${
                                 currentPage === item
-                                    ? "border-blue-400 text-blue-50 bg-blue-600"
+                                    ? "border-blue-600 text-blue-50 bg-blue-600"
                                     : "border-transparent text-blue-700 hover:border-blue-400 hover:text-blue-600"
                             }`}
                     >
