@@ -3,6 +3,7 @@ import Image from "next/image";
 import {useState} from "react";
 import { users, complaints } from "./mockData";
 import Navbar from "./components/Navbar";
+import HomePage from "./components/Hompage compts/HomePage";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState("Home");
@@ -15,7 +16,7 @@ export default function Home() {
             user={user}
         />
 
-          <div className="bg-amber-300 h-screen w-full flex items-center justify-center ">
+          <div className="">
             {currentPage === "Home" && <HomePage />}
           </div>
      
