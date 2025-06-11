@@ -4,7 +4,7 @@ import { formatDistanceToNow } from 'date-fns';
 
 export function ExperienceCard({ experience }) {
   const student = users.find(u => u.id === experience.studentId);
-
+ 
   return (
     <div className="bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all">
       <div className="p-4">

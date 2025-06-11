@@ -8,7 +8,7 @@ export function ComplaintCard({ complaint, onViewComplaint }) {
 
   // Tailwind badge classes based on App.css
   const getStatusBadgeClass = (status) => {
-    switch (status) {
+    switch (status) { 
       case 'resolved': return 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-green-500 text-white font-semibold';
       case 'in_progress': return 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-yellow-500 text-white font-semibold';
       case 'pending': return 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-red-500 text-white font-semibold';

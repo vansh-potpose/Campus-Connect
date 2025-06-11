@@ -9,37 +9,72 @@ import { SubmitExperienceForm } from './Components/SubmitExperienceForm';
 import { ComplaintDetail } from './Components/ComplaintDetail';
 import { StaffDashboard } from './Components/StaffDashboard';
 import { AdminDashboard } from './Components/AdminDashboard';
+import { ExperienceDetail } from './Components/ExperienceDetail';
 
 export default function Home() {
-  const { currentUser } = useAuth(); // now safe
+  const { currentUser } = useAuth();
   const [currentView, setCurrentView] = useState('home');
   const [selectedComplaintId, setSelectedComplaintId] = useState(null);
+  const [selectedExperienceId, setSelectedExperienceId] = useState(null);
 
   if (!currentUser) {
     return <LoginForm />;
   }
 
-  const handleViewChange = (view, complaintId = null) => {
+  // Add experienceId param for experience-detail
+  const handleViewChange = (view, id = null) => {
     setCurrentView(view);
-    setSelectedComplaintId(complaintId);
+    if (view === 'complaint-detail') {
+      setSelectedComplaintId(id);
+      setSelectedExperienceId(null);
+    } else if (view === 'experience-detail') {
+      setSelectedExperienceId(id);
+      setSelectedComplaintId(null);
+    } else {
+      setSelectedComplaintId(null);
+      setSelectedExperienceId(null);
+    }
   };
 
   const renderCurrentView = () => {
     switch (currentView) {
       case 'home':
-        return <HomePage onViewComplaint={(id) => handleViewChange('complaint-detail', id)} />;
+        // Pass handler for viewing experience details
+        return (
+          <HomePage
+            onViewComplaint={id => handleViewChange('complaint-detail', id)}
+            onViewExperience={id => handleViewChange('experience-detail', id)}
+          />
+        );
       case 'submit-complaint':
         return <SubmitComplaintForm onBack={() => handleViewChange('home')} />;
       case 'submit-experience':
         return <SubmitExperienceForm onBack={() => handleViewChange('home')} />;
       case 'complaint-detail':
-        return <ComplaintDetail complaintId={selectedComplaintId} onBack={() => handleViewChange('home')} />;
+        return (
+          <ComplaintDetail
+            complaintId={selectedComplaintId}
+            onBack={() => handleViewChange('home')}
+          />
+        );
+      case 'experience-detail':
+        return (
+          <ExperienceDetail
+            interviewExperienceId={selectedExperienceId}
+            onBack={() => handleViewChange('home')}
+          />
+        );
       case 'staff':
-        return <StaffDashboard onViewComplaint={(id) => handleViewChange('complaint-detail', id)} />;
+        return <StaffDashboard onViewComplaint={id => handleViewChange('complaint-detail', id)} />;
       case 'admin':
-        return <AdminDashboard onViewComplaint={(id) => handleViewChange('complaint-detail', id)} />;
+        return <AdminDashboard onViewComplaint={id => handleViewChange('complaint-detail', id)} />;
       default:
-        return <HomePage onViewComplaint={(id) => handleViewChange('complaint-detail', id)} />;
+        return (
+          <HomePage
+            onViewComplaint={id => handleViewChange('complaint-detail', id)}
+            onViewExperience={id => handleViewChange('experience-detail', id)}
+          />
+        );
     }
   };
 

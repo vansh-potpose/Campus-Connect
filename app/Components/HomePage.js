@@ -4,7 +4,7 @@ import { ComplaintCard } from './ComplaintCard';
 import { ExperienceCard } from './ExperienceCard';
 import { complaints, interviewExperiences } from '../data/mockData';
 
-export function HomePage({ onViewComplaint }) {
+export function HomePage({ onViewComplaint,onViewExperience }) {
   const [showComplaints, setShowComplaints] = useState(true);
   const { currentUser } = useAuth();
 
@@ -120,7 +120,7 @@ export function HomePage({ onViewComplaint }) {
         ) : (
           sortedExperiences.length > 0 ? (
             sortedExperiences.map((experience) => (
-              <ExperienceCard key={experience.id} experience={experience} />
+              <ExperienceCard key={experience.id} experience={experience} onViewExperience={onViewExperience} />
             ))
           ) : (
             <div className="col-span-full text-center py-12">
