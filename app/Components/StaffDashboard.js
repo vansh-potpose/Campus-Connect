@@ -221,7 +221,7 @@ export function StaffDashboard({ onViewComplaint }) {
                               onClick={() => onViewComplaint(complaint.id)}
                             >
                               View Details 
-                            </button>
+                            </button> 
                         </div>
                         </div>
                       </div>
