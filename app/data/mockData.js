@@ -222,5 +222,5 @@ export const answers = [
   //   answer: "Practice coding on a whiteboard or plain editor. Narrate your thoughts and stay calm if you get stuck.",
   //   created_at: "2025-06-06T15:00:00Z",
   //   updated_at: "2025-06-06T15:00:00Z",
-  // } 
+  // }  
 ];
