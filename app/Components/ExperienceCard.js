@@ -2,11 +2,11 @@ import React from 'react';
 import { users } from '../data/mockData';
 import { formatDistanceToNow } from 'date-fns';
 
-export function ExperienceCard({ experience }) {
+export function ExperienceCard({ experience,onViewExperience }) {
   const student = users.find(u => u.id === experience.studentId);
  
   return (
-    <div className="bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all">
+    <div className="bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all" onClick={() => onViewExperience(experience.id)}>
       <div className="p-4">
         <div className="flex items-start justify-between mb-3">
           <div className="flex-1">
