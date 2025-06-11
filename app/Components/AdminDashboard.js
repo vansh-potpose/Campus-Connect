@@ -295,7 +295,7 @@ export function AdminDashboard({ onViewComplaint }) {
                     <div className="flex-1">
                       <button
                         onClick={() => onViewComplaint(complaint.id)}
-                        className="text-lg font-semibold text-gray-900 mb-2 hover:text-blue-600 transition-colors cursor-pointer text-left"
+                        className="text-lg font-semibold  mb-2 hover:text-blue-600 transition-colors cursor-pointer text-left"
                       >
                         {complaint.title}
                       </button>
@@ -357,19 +357,19 @@ export function AdminDashboard({ onViewComplaint }) {
                       <label className="text-sm font-medium text-gray-700">Update Status</label>
                       <div className="flex gap-2">
                         <button
-                          className={`px-3 py-1 rounded-md text-sm font-medium ${complaint.status === 'pending' ? 'bg-blue-600 text-white' : 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-100'} transition-colors`}
+                          className={`px-3 py-1 rounded-md text-sm font-medium ${complaint.status === 'pending' ? 'bg-[#171717] text-white' : 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-100'} transition-colors`}
                           onClick={() => handleStatusUpdate(complaint.id, 'pending')}
                         >
                           Pending
                         </button>
                         <button
-                          className={`px-3 py-1 rounded-md text-sm font-medium ${complaint.status === 'in_progress' ? 'bg-blue-600 text-white' : 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-100'} transition-colors`}
+                          className={`px-3 py-1 rounded-md text-sm font-medium ${complaint.status === 'in_progress' ? 'bg-[#171717] text-white' : 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-100'} transition-colors`}
                           onClick={() => handleStatusUpdate(complaint.id, 'in_progress')}
                         >
                           In Progress
                         </button>
                         <button
-                          className={`px-3 py-1 rounded-md text-sm font-medium ${complaint.status === 'resolved' ? 'bg-blue-600 text-white' : 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-100'} transition-colors`}
+                          className={`px-3 py-1 rounded-md text-sm font-medium ${complaint.status === 'resolved' ? 'bg-[#171717] text-white' : 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-100'} transition-colors`}
                           onClick={() => handleStatusUpdate(complaint.id, 'resolved')}
                         >
                           Resolved
