@@ -220,7 +220,7 @@ export function StaffDashboard({ onViewComplaint }) {
                               className="px-3 py-1 rounded-md text-sm font-medium border border-gray-300 bg-transparent  text-gray-700 hover:bg-gray-100 transition-colors"
                               onClick={() => onViewComplaint(complaint.id)}
                             >
-                              View Details
+                              View Details 
                             </button>
                         </div>
                         </div>
