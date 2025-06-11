@@ -96,7 +96,7 @@ export function AdminDashboard({ onViewComplaint }) {
       )}
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid lg:grid-cols-1 md:grid-cols-2 grid-cols-4 gap-6 mb-8">
         <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6">
           <div className="flex items-center">
             <div className="p-3 rounded-lg mr-4 bg-blue-100">
