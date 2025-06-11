@@ -29,7 +29,7 @@ export function HomePage({ onViewComplaint }) {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div className="grid grid-cols-3 md:grid-cols-3 gap-6 mb-12">
         <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6">
           <div className="flex items-center">
             <div className="p-3 rounded-lg mr-4 bg-blue-100">
@@ -92,7 +92,7 @@ export function HomePage({ onViewComplaint }) {
                 <span className="block w-11 h-6 bg-gray-200 rounded-full peer-checked:bg-blue-600 transition-colors"></span>
                 <span className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform peer-checked:translate-x-5"></span>
               </label>
-              <span className={`text-sm font-medium ${!showComplaints ? 'text-blue-600' : 'text-gray-400'}`}>Experiences</span>
+              <span className={`text-sm font-medium ${!showComplaints ? 'text-purple-600' : 'text-gray-400'}`}>Experiences</span>
             </div>
           </div>
         </div>

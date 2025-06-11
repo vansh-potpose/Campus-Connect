@@ -31,11 +31,11 @@ export function SubmitExperienceForm({ onBack }) {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-1 grid-cols-3 gap-8">
         <div className="lg:col-span-2">
           <div className="bg-white rounded-xl shadow-md border border-gray-200 p-6 transition-all">
             <div className="mb-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-2 flex items-center">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-2 flex items-center">
                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
@@ -66,7 +66,7 @@ export function SubmitExperienceForm({ onBack }) {
                         placeholder="e.g., Google, Microsoft, Amazon"
                         value={companyName}
                         onChange={(e) => setCompanyName(e.target.value)}
-                        className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors pl-10"
+                        className="w-full pl-10 pr-3 py-3  border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-blue-500 focus:ring focus:ring-black transition-colors "
                         required
                       />
                     </div>
@@ -80,7 +80,7 @@ export function SubmitExperienceForm({ onBack }) {
                       placeholder="e.g., Software Engineer Intern"
                       value={roleApplied}
                       onChange={(e) => setRoleApplied(e.target.value)}
-                      className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors"
+                      className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-blue-500 focus:ring focus:ring-black transition-colors"
                       required
                     />
                   </div>
@@ -93,7 +93,7 @@ export function SubmitExperienceForm({ onBack }) {
                     placeholder="Describe your interview process: How many rounds were there? What types of questions were asked? How was the overall atmosphere? What were the interviewers like?"
                     value={experience}
                     onChange={(e) => setExperience(e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-lg text-sm min-h-[120px] resize-vertical focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors font-sans"
+                    className="w-full p-3 border border-gray-300 rounded-lg text-sm min-h-[120px] resize-vertical focus:outline-none focus:border-blue-500 focus:ring focus:ring-black transition-colors font-sans"
                     required
                   />
                 </div>
@@ -110,7 +110,7 @@ export function SubmitExperienceForm({ onBack }) {
                     placeholder="Share your advice: What should students prepare? Any specific topics to focus on? Resources that helped you? Common mistakes to avoid?"
                     value={tips}
                     onChange={(e) => setTips(e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-lg text-sm min-h-[100px] resize-vertical focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors font-sans"
+                    className="w-full p-3 border border-gray-300 rounded-lg text-sm min-h-[100px] resize-vertical focus:outline-none focus:border-blue-500 focus:ring focus:ring-black transition-colors font-sans"
                     required
                   />
                 </div>
@@ -122,7 +122,7 @@ export function SubmitExperienceForm({ onBack }) {
                     </svg>
                     Back
                   </button>
-                  <button type="submit" className="inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium text-white bg-blue-500 hover:bg-blue-600 transition-colors text-sm gap-2 flex-1 disabled:opacity-50 disabled:cursor-not-allowed" disabled={loading}>
+                  <button type="submit" className="inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium text-white bg-[#171717] hover:bg-[#171717e6] transition-colors text-sm gap-2 flex-1 disabled:opacity-50 disabled:cursor-not-allowed" disabled={loading}>
                     {loading ? (
                       'Sharing Experience...'
                     ) : (

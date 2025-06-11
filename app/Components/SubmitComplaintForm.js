@@ -30,11 +30,11 @@ export function SubmitComplaintForm({ onBack }) {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-1 grid-cols-3 gap-8">
         <div className="lg:col-span-2">
           <div className="bg-white rounded-xl shadow-md border border-gray-200 p-6 transition-all">
             <div className="mb-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-2 flex items-center">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-2 flex items-center">
                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
@@ -60,7 +60,7 @@ export function SubmitComplaintForm({ onBack }) {
                     placeholder="Brief summary of your complaint"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors"
+                    className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-blue-500 focus:ring focus:ring-black transition-colors"
                     required
                   />
                 </div>
@@ -72,7 +72,7 @@ export function SubmitComplaintForm({ onBack }) {
                     placeholder="Provide a detailed description of the issue, including when it occurred, where it happened, and any other relevant information..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-lg text-sm min-h-[120px] resize-vertical focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors font-sans"
+                    className="w-full p-3 border border-gray-300 rounded-lg text-sm min-h-[120px] resize-vertical focus:outline-none focus:border-blue-500 focus:ring focus:ring-black transition-colors font-sans"
                     required
                   />
                 </div>
@@ -103,7 +103,7 @@ export function SubmitComplaintForm({ onBack }) {
                     </svg>
                     Back
                   </button>
-                  <button type="submit" className="inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium text-white bg-blue-500 hover:bg-blue-600 transition-colors text-sm gap-2 flex-1 disabled:opacity-50 disabled:cursor-not-allowed" disabled={loading}>
+                  <button type="submit" className="inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium text-white bg-[#171717] hover:bg-[#171717e6] transition-colors text-sm gap-2 flex-1 disabled:opacity-50 disabled:cursor-not-allowed" disabled={loading}>
                     {loading ? (
                       'Submitting...'
                     ) : (

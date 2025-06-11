@@ -56,7 +56,7 @@ export function Navigation({ currentView, onViewChange }) {
   };
 
   return (
-    <nav className="bg-white bg-opacity-80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
         <div className="flex items-center gap-8">
           <div className="text-xl font-bold text-gray-900">Campus Connect</div>
@@ -77,7 +77,7 @@ export function Navigation({ currentView, onViewChange }) {
           <span className="hidden md:inline text-sm text-gray-600">
             Welcome, {currentUser.name} ({currentUser.role})
           </span>
-          <button onClick={logout} className="inline-flex items-center px-3 py-1 rounded-md font-medium text-sm border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-100 transition-colors gap-1">
+          <button onClick={logout} className="inline-flex items-center px-3 py-2 rounded-md font-medium text-sm border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-100 transition-colors gap-1">
             {getIcon('log-out')}
             Logout
           </button>
