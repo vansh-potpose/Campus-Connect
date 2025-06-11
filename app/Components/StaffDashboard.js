@@ -208,7 +208,7 @@ export function StaffDashboard({ onViewComplaint }) {
                               onClick={() => handleStatusUpdate(complaint.id, 'in_progress')}
                             >
                               In Progress
-                            </button>
+                            </button> 
                             <button
                               className={`px-3 py-1 rounded-md text-sm font-medium ${complaint.status === 'resolved' ? 'bg-[#171717] text-white' : 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-100'} transition-colors`}
                               onClick={() => handleStatusUpdate(complaint.id, 'resolved')}
