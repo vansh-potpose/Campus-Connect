@@ -32,9 +32,9 @@ export function StaffDashboard({ onViewComplaint }) {
 
   const getStatusBadgeClass = (status) => {
     switch (status) {
-      case 'resolved': return 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-green-50 text-green-600';
-      case 'in_progress': return 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-yellow-50 text-yellow-600';
-      case 'pending': return 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-red-50 text-red-600';
+      case 'resolved': return 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-green-500 text-white font-semibold';
+      case 'in_progress': return 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-yellow-500 text-white font-semibold';
+      case 'pending': return 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-red-500 text-white font-semibold';
       default: return 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-gray-100 text-gray-700';
     }
   };
@@ -53,7 +53,7 @@ export function StaffDashboard({ onViewComplaint }) {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-4 flex items-center">
           <svg className="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
           </svg>
           Staff Dashboard
         </h1>
@@ -72,7 +72,7 @@ export function StaffDashboard({ onViewComplaint }) {
       )}
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid lg:grid-cols-1 md:grid-cols-2 grid-cols-4 gap-6 mb-8">
         <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6">
           <div className="flex items-center">
             <div className="p-3 rounded-lg mr-4 bg-blue-100">
@@ -156,7 +156,7 @@ export function StaffDashboard({ onViewComplaint }) {
                         <div className="flex-1">
                           <button
                             onClick={() => onViewComplaint(complaint.id)}
-                            className="text-lg font-semibold text-gray-900 mb-2 hover:text-blue-600 transition-colors cursor-pointer text-left"
+                            className="text-lg font-semibold mb-2 hover:text-blue-600  transition-colors cursor-pointer text-left"
                           >
                             {complaint.title}
                           </button>
@@ -195,32 +195,34 @@ export function StaffDashboard({ onViewComplaint }) {
                       <div className="pt-4 border-t border-gray-100">
                         <div className="space-y-2">
                           <label className="text-sm font-medium text-gray-700">Update Status</label>
+                          <div className="flex items-start justify-between">
                           <div className="flex gap-2 flex-wrap">
                             <button
-                              className={`px-3 py-1 rounded-md text-sm font-medium ${complaint.status === 'pending' ? 'bg-blue-600 text-white' : 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-100'} transition-colors`}
+                              className={`px-3 py-1 rounded-md text-sm font-medium ${complaint.status === 'pending' ? 'bg-[#171717] text-white' : 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-100'} transition-colors`}
                               onClick={() => handleStatusUpdate(complaint.id, 'pending')}
                             >
                               Pending
                             </button>
                             <button
-                              className={`px-3 py-1 rounded-md text-sm font-medium ${complaint.status === 'in_progress' ? 'bg-blue-600 text-white' : 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-100'} transition-colors`}
+                              className={`px-3 py-1 rounded-md text-sm font-medium ${complaint.status === 'in_progress' ? 'bg-[#171717] text-white' : 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-100'} transition-colors`}
                               onClick={() => handleStatusUpdate(complaint.id, 'in_progress')}
                             >
                               In Progress
                             </button>
                             <button
-                              className={`px-3 py-1 rounded-md text-sm font-medium ${complaint.status === 'resolved' ? 'bg-blue-600 text-white' : 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-100'} transition-colors`}
+                              className={`px-3 py-1 rounded-md text-sm font-medium ${complaint.status === 'resolved' ? 'bg-[#171717] text-white' : 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-100'} transition-colors`}
                               onClick={() => handleStatusUpdate(complaint.id, 'resolved')}
                             >
                               Resolved
                             </button>
+                          </div>
                             <button
-                              className="px-3 py-1 rounded-md text-sm font-medium border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-100 transition-colors"
+                              className="px-3 py-1 rounded-md text-sm font-medium border border-gray-300 bg-transparent  text-gray-700 hover:bg-gray-100 transition-colors"
                               onClick={() => onViewComplaint(complaint.id)}
                             >
                               View Details
                             </button>
-                          </div>
+                        </div>
                         </div>
                       </div>
                     </div>

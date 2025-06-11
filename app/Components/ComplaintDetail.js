@@ -37,9 +37,9 @@ export function ComplaintDetail({ complaintId, onBack }) {
 
   const getStatusBadgeClass = (status) => {
     switch (status) {
-      case 'resolved': return 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-green-50 text-green-600';
-      case 'in_progress': return 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-yellow-50 text-yellow-600';
-      case 'pending': return 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-red-50 text-red-600';
+      case 'resolved': return 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-green-500 text-white font-semibold';
+      case 'in_progress': return 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-yellow-500 text-white font-semibold';
+      case 'pending': return 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-red-500 text-white font-semibold';
       default: return 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-gray-100 text-gray-700';
     }
   };
@@ -112,7 +112,7 @@ export function ComplaintDetail({ complaintId, onBack }) {
                   {getStatusText(complaint.status)}
                 </span>
                 {complaint.anonymous && (
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1 bg-transparent text-gray-500 border border-gray-300">Anonymous</span>
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold gap-1 bg-transparent text-black border border-gray-300">Anonymous</span>
                 )}
               </div>
             </div>
@@ -223,7 +223,7 @@ export function ComplaintDetail({ complaintId, onBack }) {
           </div>
 
           {/* Add New Feedback (Staff and Admin only) */}
-          {(currentUser?.role === 'staff' || currentUser?.role === 'admin') && (
+          
             <div className="border-t pt-6">
               <h4 className="font-medium text-gray-900 mb-3">Add Feedback</h4>
               <form onSubmit={handleSubmitFeedback} className="space-y-4">
@@ -231,10 +231,10 @@ export function ComplaintDetail({ complaintId, onBack }) {
                   placeholder="Provide an update on this complaint..."
                   value={newFeedback}
                   onChange={(e) => setNewFeedback(e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 min-h-[100px]"
+                  className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring focus:ring-black focus:border-blue-400 min-h-[100px]"
                   required
                 />
-                <button type="submit" className="inline-flex items-center justify-center px-4 py-2 rounded-md font-medium text-sm bg-blue-600 text-white hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled={submitting || !newFeedback.trim()}>
+                <button type="submit" className="inline-flex items-center justify-center px-4 py-2 rounded-md font-medium text-sm bg-[#171717] hover:bg-[#171717e6] text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled={submitting || !newFeedback.trim()}>
                   {submitting ? (
                     'Adding Feedback...'
                   ) : (
@@ -248,7 +248,7 @@ export function ComplaintDetail({ complaintId, onBack }) {
                 </button>
               </form>
             </div>
-          )}
+          
         </div>
       </div>
     </div>
