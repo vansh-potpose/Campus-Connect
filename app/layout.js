@@ -1,6 +1,9 @@
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from './contexts/AuthContext';
+import { AuthProvider } from "./contexts/AuthContext";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+import Providers from "./provider";
 
 // Existing Geist fonts
 const geistSans = Geist({
@@ -20,8 +23,9 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: 'Campus Connect - Student Complaint & Experience Platform',
-  description: 'A comprehensive platform for students to share complaints and interview experiences',
+  title: "Campus Connect - Student Complaint & Experience Platform",
+  description:
+    "A comprehensive platform for students to share complaints and interview experiences",
 };
 
 export default function RootLayout({ children }) {
@@ -30,9 +34,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased bg-gradient-to-br from-blue-50 via-white to-purple-50`}
       >
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

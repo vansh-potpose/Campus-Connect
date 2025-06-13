@@ -1,24 +1,31 @@
 "use client";
 import React, { useState } from "react";
 import auth from "@/app/(backend-services)/auth.service";
+import { login } from "@/app/store/features/authSlice";
+import { useDispatch } from "react-redux";
+import Error from "next/error";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
-    console.log("something");
     try {
       const { email, password } = e.target.elements;
       e.preventDefault();
       setLoading(true);
-      setError("");
-      console.log(email.value, password.value);
       const user = await auth.login(email.value, password.value);
-      console.log(user);
+      if (!user) {
+        throw new Error("user not found");
+      }
+      dispatch(login(user));
       setLoading(false);
+      router.push("/");
     } catch (error) {
       setError(error.message);
     } finally {
