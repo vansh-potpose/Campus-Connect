@@ -27,6 +27,37 @@ class InterviewExperiences {
       throw new Error(error.message);
     }
   }
+  async createInterviewExperience({ companyName, roleApplied, experience, tips }) {
+    try {
+      const response = await fetch(`${this.interviewExperience_url}/create-interview-experience`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          companyName,
+          roleApplied,
+          experience,
+          tips
+        }),
+        credentials: "include",
+      });
+
+      if (!response) {
+        throw new Error("complaint cannot be created");
+      }
+
+      const experienceData = (await response.json()).data;
+
+      if (!experienceData) {
+        throw new Error("complaint cannot be created");
+      }
+
+      return experienceData;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 }
 
 const interviewExperiences = new InterviewExperiences();

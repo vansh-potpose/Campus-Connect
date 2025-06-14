@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import interviewExperiences from '../(backend-services)/interviewExperience.service';
 
 export function SubmitExperienceForm({ onBack }) {
   const [companyName, setCompanyName] = useState('');
@@ -8,18 +9,34 @@ export function SubmitExperienceForm({ onBack }) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (e) => {
+   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    try {
+      setLoading(true);
+      const experienceData = await interviewExperiences.createInterviewExperience({
+        companyName,
+        roleApplied,
+        experience,
+        tips
+      });
 
-    // Simulate API call
-    setTimeout(() => {
+      if (!experienceData) {
+        throw new Error("interview experience not found");
+      }
+
+      console.log(experienceData);
+      if (experienceData) {
+        setSuccess(true);
+        setTimeout(() => {
+          onBack(); // or use router.push('/home')
+        }, 2000);
+      }
+    } catch (error) {
+      console.error(error);
+      setSuccess(false);
+    } finally {
       setLoading(false);
-      setSuccess(true);
-      setTimeout(() => {
-        onBack();
-      }, 2000);
-    }, 1000);
+    }
   };
 
   return (

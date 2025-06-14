@@ -67,6 +67,34 @@ class Auth {
       throw new Error(error.message);
     }
   }
+
+  async getUserDetails(userId) {
+    try {
+      const response = await fetch(
+        `${this.auth_url}/get-user-details/${userId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+
+      if (!response) {
+        throw new Error("user not found");
+      }
+
+      const user = (await response.json()).data;
+
+      if (!user) {
+        throw new Error("user not found");
+      }
+      return user;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 }
 
 const auth = new Auth();

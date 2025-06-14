@@ -12,23 +12,26 @@ import interviewExperiences from "../(backend-services)/interviewExperience.serv
 export function HomePage({ onViewComplaint, onViewExperience }) {
   const [showComplaints, setShowComplaints] = useState(true);
   const [complaintsCount, setComplaintsCount] = useState(0);
-  let complaintsResolvedCount = 0,
-    interviewExperiencesCount = 0;
+  const [complaintsResolvedCount, setComplaintsResolvedCount] = useState(0);
+  const [interviewExperiencesCount, setInterviewExperiencesCount] = useState(0);
 
   useEffect(() => {
     async function fetchCount() {
-      const complaintsCount = await complaints.getCount();
-      complaintsResolvedCount = await complaints.getResolvedCount();
-      interviewExperiencesCount = await interviewExperiences.getCount();
-      setComplaintsCount(complaintsCount);
-      console.log(
-        complaintsCount,
-        complaintsResolvedCount,
-        interviewExperiencesCount
-      );
+      try {
+        const complaintsCount = (await complaints.getCount()) || 0;
+        const complaintsResolvedCount =
+          (await complaints.getResolvedCount()) || 0;
+        const interviewExperiencesCount =
+          (await interviewExperiences.getCount()) || 0;
+        setComplaintsCount(complaintsCount);
+        setComplaintsResolvedCount(complaintsResolvedCount);
+        setInterviewExperiencesCount(interviewExperiencesCount);
+      } catch (error) {
+        console.log(error);
+      }
     }
     fetchCount();
-  }, [complaintsCount, interviewExperiencesCount, complaintsResolvedCount]);
+  }, []);
   // Sort by creation date (newest first)
   const sortedComplaints = [...complaintArr].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()

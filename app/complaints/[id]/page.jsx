@@ -1,25 +1,68 @@
-import React, { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import { complaints, users, feedbacks } from "../data/mockData";
-import { formatDistanceToNow } from "date-fns";
+// app/complaints/[id]/page.js
 
-export function ComplaintDetail({ complaintId, onBack }) {
-  const { currentUser } = useAuth();
-  const [localFeedbacks, setLocalFeedbacks] = useState(feedbacks);
+"use client";
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import complaints from "@/app/(backend-services)/complaints.service";
+import auth from "@/app/(backend-services)/auth.service";
+import feedback from "@/app/(backend-services)/feedback.service";
+import { formatDistanceToNow } from "date-fns";
+import { useSelector } from "react-redux";
+
+export default function ComplaintDetails() {
+  const { id } = useParams(); // dynamic id from route
+  const [complaint, setComplaint] = useState(null);
+  const [student, setStudent] = useState(null);
+  const [assignedStaff, setAssignedStaff] = useState(null);
+  const [feedbackArr, setFeedbackArr] = useState([]);
   const [newFeedback, setNewFeedback] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const { user } = useSelector((state) => state.authReducer);
+  const router = useRouter();
 
-  const complaint = complaints.find((c) => c.id === complaintId);
-  const student = complaint
-    ? users.find((u) => u.id === complaint.studentId)
-    : null;
-  const assignedStaff = complaint?.assignedTo
-    ? users.find((u) => u.id === complaint.assignedTo)
-    : null;
-  const complaintFeedbacks = localFeedbacks.filter(
-    (f) => f.complaintId === complaintId
-  );
+  useEffect(() => {
+    const fetchComplaint = async () => {
+      try {
+        const complaint = await complaints.getComplaint(id);
+        if (!complaint) {
+          throw new Error("cannot get Complaint");
+        }
+        setComplaint(complaint);
+        if (!complaint.isAnonymous) {
+          const student = await auth.getUserDetails(complaint.createdById);
+          if (!student) {
+            throw new Error("user not found");
+          }
+          setStudent(student);
+        }
+
+        if (
+          complaint.assignedToId &&
+          typeof complaint.assignedToId === "number"
+        ) {
+          const assignedStaff = await auth.getUserDetails(
+            complaint.assignedToId
+          );
+          if (!assignedStaff) {
+            throw new Error("assigned staff not found");
+          }
+          setAssignedStaff(assignedStaff);
+        }
+
+        const feedbackArr = await feedback.getFeedbackOfComplaint(id);
+        if (!feedbackArr || (feedbackArr && !Array.isArray(feedbackArr))) {
+          throw new Error("feedbacks not found");
+        }
+
+        setFeedbackArr(feedbackArr);
+      } catch (err) {
+        console.log("Error fetching complaint:", err);
+      }
+    };
+
+    if (id) fetchComplaint();
+  }, [id]);
 
   if (!complaint) {
     return (
@@ -45,7 +88,7 @@ export function ComplaintDetail({ complaintId, onBack }) {
             The complaint you're looking for doesn't exist or has been removed.
           </p>
           <button
-            onClick={onBack}
+            onClick={() => router.push("/")}
             className="inline-flex items-center justify-center px-4 py-2 rounded-md font-medium text-sm bg-blue-600 text-white hover:bg-blue-700 transition-colors"
           >
             <svg
@@ -102,9 +145,9 @@ export function ComplaintDetail({ complaintId, onBack }) {
     // Simulate API call
     setTimeout(() => {
       const newFeedbackObj = {
-        id: localFeedbacks.length + 1,
-        complaintId: complaintId,
-        staffId: currentUser.id,
+        id: feedbackArr.length + 1,
+        complaintId: id,
+        staffId: user.userId,
         message: newFeedback,
         createdAt: new Date().toISOString(),
       };
@@ -121,7 +164,7 @@ export function ComplaintDetail({ complaintId, onBack }) {
       {/* Back Button */}
       <div className="mb-6">
         <button
-          onClick={onBack}
+          onClick={() => router.push("/")}
           className="inline-flex items-center justify-center px-4 py-2 rounded-md font-medium text-sm border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-100 transition-colors"
         >
           <svg
@@ -303,50 +346,43 @@ export function ComplaintDetail({ complaintId, onBack }) {
 
           {/* Existing Feedbacks */}
           <div className="space-y-4 mb-6">
-            {complaintFeedbacks.length > 0 ? (
-              complaintFeedbacks
-                .sort(
-                  (a, b) =>
-                    new Date(a.createdAt).getTime() -
-                    new Date(b.createdAt).getTime()
-                )
-                .map((feedback) => {
-                  const staff = users.find((u) => u.id === feedback.staffId);
-                  return (
-                    <div
-                      key={feedback.id}
-                      className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg mb-4"
-                    >
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-700 font-medium text-xs">
-                          {staff?.name
-                            .split(" ")
-                            .map((n) => n[0])
-                            .join("")}
+            {feedbackArr.length > 0 ? (
+              feedbackArr.map((feedback) => {
+                const staff = users.find((u) => u.id === feedback.staffId);
+                return (
+                  <div
+                    key={feedback.id}
+                    className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg mb-4"
+                  >
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-700 font-medium text-xs">
+                        {staff?.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <p className="font-medium text-gray-900">
+                            {staff?.name}
+                          </p>
+                          <span className="text-sm text-gray-500">•</span>
+                          <p className="text-sm text-gray-500">
+                            {staff?.department}
+                          </p>
+                          <span className="text-sm text-gray-500">•</span>
+                          <p className="text-sm text-gray-500">
+                            {formatDistanceToNow(new Date(feedback.createdAt), {
+                              addSuffix: true,
+                            })}
+                          </p>
                         </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <p className="font-medium text-gray-900">
-                              {staff?.name}
-                            </p>
-                            <span className="text-sm text-gray-500">•</span>
-                            <p className="text-sm text-gray-500">
-                              {staff?.department}
-                            </p>
-                            <span className="text-sm text-gray-500">•</span>
-                            <p className="text-sm text-gray-500">
-                              {formatDistanceToNow(
-                                new Date(feedback.createdAt),
-                                { addSuffix: true }
-                              )}
-                            </p>
-                          </div>
-                          <p className="text-gray-700">{feedback.message}</p>
-                        </div>
+                        <p className="text-gray-700">{feedback.message}</p>
                       </div>
                     </div>
-                  );
-                })
+                  </div>
+                );
+              })
             ) : (
               <div className="text-center py-8">
                 <svg

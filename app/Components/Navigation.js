@@ -30,7 +30,7 @@ export function Navigation({ currentView, onViewChange }) {
           }
           dispatch(login(user));
         } catch (error) {
-          console.error(error);
+          console.log(error);
           router.push("/login");
         }
       };

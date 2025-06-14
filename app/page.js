@@ -89,7 +89,6 @@ export default function Home() {
 
   return (
     <>
-      <Navigation currentView={currentView} onViewChange={handleViewChange} />
       <main className="bg-gradient-to-br from-blue-50 via-white to-purple-50">
         {renderCurrentView()}
       </main>
