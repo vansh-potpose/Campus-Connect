@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
 import { users, interviewExperiences, questions, answers } from '../data/mockData';
 import { formatDistanceToNow } from 'date-fns';
 

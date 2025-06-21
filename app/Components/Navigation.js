@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import auth from "../(backend-services)/auth.service";
 import { login, logout as logoutUser } from "../store/features/authSlice";
+import Link from "next/link";
 
 export function Navigation({ currentView, onViewChange }) {
   const { user, status } = useSelector((state) => state.authReducer);
@@ -60,18 +61,21 @@ export function Navigation({ currentView, onViewChange }) {
       label: "Home",
       icon: "home",
       roles: ["student", "staff", "admin"],
+      to: "/",
     },
     {
       key: "submit-complaint",
       label: "Submit Complaint",
       icon: "file-text",
       roles: ["student"],
+      to: "/submit-complaint",
     },
     {
       key: "submit-experience",
       label: "Share Experience",
       icon: "message-square",
       roles: ["student"],
+      to: "/submit-experience",
     },
     { key: "staff", label: "Staff Dashboard", icon: "users", roles: ["staff"] },
     {
@@ -79,6 +83,7 @@ export function Navigation({ currentView, onViewChange }) {
       label: "Admin Dashboard",
       icon: "settings",
       roles: ["admin"],
+      to: "/admin",
     },
   ];
 
@@ -195,9 +200,9 @@ export function Navigation({ currentView, onViewChange }) {
           <div className="text-xl font-bold text-gray-900">Campus Connect</div>
           <div className="hidden md:flex gap-4">
             {filteredNavItems.map((item) => (
-              <button
+              <Link
                 key={item.key}
-                onClick={() => onViewChange(item.key)}
+                href={item.to}
                 className={`flex items-center px-3 py-2 rounded-md text-sm font-medium gap-2 transition-colors ${
                   currentView === item.key
                     ? "bg-gray-900 text-white"
@@ -206,13 +211,12 @@ export function Navigation({ currentView, onViewChange }) {
               >
                 {getIcon(item.icon)}
                 {item.label}
-              </button>
+              </Link>
             ))}
           </div>
         </div>
         <div className="flex items-center gap-4">
           <span className="hidden md:inline text-sm text-gray-600">
-            {console.log(user)}
             Welcome, {user.name} ({user.role})
           </span>
           <button

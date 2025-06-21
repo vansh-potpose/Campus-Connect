@@ -55,7 +55,15 @@ export default function ComplaintDetails() {
           throw new Error("feedbacks not found");
         }
 
-        setFeedbackArr(feedbackArr);
+        const updatedFeedbackArr = await Promise.all(
+          feedbackArr.map(async (feedback) => {
+            const user = await auth.getUserDetails(feedback.userId);
+            if (!user) return feedback;
+            return { ...feedback, user };
+          })
+        );
+
+        setFeedbackArr(updatedFeedbackArr);
       } catch (err) {
         console.log("Error fetching complaint:", err);
       }
@@ -138,25 +146,25 @@ export default function ComplaintDetails() {
   };
 
   const handleSubmitFeedback = async (e) => {
-    e.preventDefault();
-    if (!newFeedback.trim()) return;
-
-    setSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      const newFeedbackObj = {
-        id: feedbackArr.length + 1,
+    try {
+      e.preventDefault();
+      if (!newFeedback.trim()) return;
+      setSubmitting(true);
+      const newFeedbackObj = await feedback.createFeedback({
         complaintId: id,
-        staffId: user.userId,
         message: newFeedback,
-        createdAt: new Date().toISOString(),
-      };
-      setLocalFeedbacks((prev) => [...prev, newFeedbackObj]);
+        isAnonymous: false,
+      });
+      if (!newFeedbackObj) {
+        throw new Error("something went wrong while creating feedback");
+      }
+      setFeedbackArr((prev) => [newFeedbackObj, ...prev]);
       setNewFeedback("");
       setSubmitting(false);
       setSuccessMessage("Feedback added successfully!");
-      setTimeout(() => setSuccessMessage(""), 3000);
-    }, 1000);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -251,7 +259,7 @@ export default function ComplaintDetails() {
 
           <div className="flex items-center justify-between pt-4 border-t border-gray-100">
             <div className="flex items-center gap-3">
-              {!complaint.anonymous && student ? (
+              {!complaint.isAnonymous && student ? (
                 <>
                   <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-700 font-medium text-xs">
                     {student.name
@@ -348,15 +356,14 @@ export default function ComplaintDetails() {
           <div className="space-y-4 mb-6">
             {feedbackArr.length > 0 ? (
               feedbackArr.map((feedback) => {
-                const staff = users.find((u) => u.id === feedback.staffId);
                 return (
                   <div
-                    key={feedback.id}
+                    key={feedback.feedbackId}
                     className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg mb-4"
                   >
                     <div className="flex items-center gap-3 mb-2">
                       <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-700 font-medium text-xs">
-                        {staff?.name
+                        {feedback?.givenByName
                           .split(" ")
                           .map((n) => n[0])
                           .join("")}
@@ -364,12 +371,9 @@ export default function ComplaintDetails() {
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
                           <p className="font-medium text-gray-900">
-                            {staff?.name}
+                            {feedback?.givenByName}
                           </p>
-                          <span className="text-sm text-gray-500">•</span>
-                          <p className="text-sm text-gray-500">
-                            {staff?.department}
-                          </p>
+
                           <span className="text-sm text-gray-500">•</span>
                           <p className="text-sm text-gray-500">
                             {formatDistanceToNow(new Date(feedback.createdAt), {
